@@ -7,7 +7,9 @@ $(document).ready(function() {
     if(arrow_keys.indexOf(event.which) > -1) {
       var tile = $('.tile');
       moveTile(tile, event.which);
-      createTile();
+      sortRow();
+      console.log(tile_array);
+      // createTile();
       event.preventDefault();
     }
   })
@@ -18,6 +20,12 @@ $(document).ready(function() {
   var tile_array = [];
 
 function initializeGame() {
+  createTile();
+  createTile();
+  createTile();
+  createTile();
+  createTile();
+  createTile();
   createTile();
   createTile();
 }
@@ -85,10 +93,10 @@ function moveTile(tile, direction) {
   switch(direction) {
     case 38: //up
       //tile.attr("data-row","r0");
-      var zero = moveUp(0);
-      var one = moveUp(1);
-      var two = moveUp(2);
-      var three = moveUp(3);
+      // var zero = moveUp(0);
+      // var one = moveUp(1);
+      // var two = moveUp(2);
+      // var three = moveUp(3);
       break;
     case 40: //down
       tile.attr("data-row","r3");
@@ -102,8 +110,22 @@ function moveTile(tile, direction) {
   }
 }
 
+
+function sortRow() {
+  tile_array.sort(compareRow);
+}
+
+function compareRow(a, b) {
+  if (array[a].attr('data-row') < tile_array[b].attr('data_row'))
+    return -1;
+  if (tile_array[a].attr('data-row') > tile_array[b].attr('data_row'))
+    return 1;
+  return 0;
+}
+
+
   function getColumn(col){
-    var column = [];
+    var column = Array(4);
     var colnum = ('c' + col);
     console.log(colnum);
     for(var i = 0; i < tile_array.length; i++) {
