@@ -85,7 +85,10 @@ function moveTile(tile, direction) {
   switch(direction) {
     case 38: //up
       //tile.attr("data-row","r0");
-      moveUp();
+      var zero = moveUp(0);
+      var one = moveUp(1);
+      var two = moveUp(2);
+      var three = moveUp(3);
       break;
     case 40: //down
       tile.attr("data-row","r3");
@@ -99,34 +102,63 @@ function moveTile(tile, direction) {
   }
 }
 
-
-  function moveUp(){
-
-   for(var i = 0; i < tile_array.length; i++) {
-    console.log("I'm here");
-    var tile = tile_array[i];
-    checkUp(tile);
+  function getColumn(col){
+    var column = [];
+    var colnum = ('c' + col);
+    console.log(colnum);
+    for(var i = 0; i < tile_array.length; i++) {
+      if (tile_array[i].attr('data-col') == colnum ) {
+        column.push(tile_array[i]);
       }
     }
+    return column;
+  }
 
-    function checkUp(tile) {
-      console.log(tile);
-       // => [data-col: c0, data-row: r3]
-      var column = tile.attr('data-col');// data-col: 'c0'
-      var row = tile.attr('data-row');
-      if (row != 'r0') {
-        var row_num = +(row.slice(1, 2));
-        var next_row = 'r' + (row_num - 1);
-          for(i = 0; i < tile_array.length; i++) {
-            if(tile_array[i].attr('data-col') == column) {
-              if (tile_array[i].attr('data-row') != next_row) {
-                tile.attr("data-row", next_row);
-              }
-            }
-          }
-        }
-        }
+  function moveUp(col) {
+    var column = getColumn(col);
+    for (var i = 0; i < column.length; i++ ) {
+      var row = ('r' + [i] );
+      column[i].attr('data-row', row);
+    }
+    console.log(column);
+  }
 
+
+
+
+  // function moveUp(){
+  //
+  //   for(var i = 0; i < tile_array.length; i++) {
+  //     var tile = tile_array[i];
+  //     checkUp(tile);
+  //   }
+  // }
+  //
+  // function checkUp(tile) {
+  //   var column = tile.attr('data-col');// data-col: 'c0'
+  //   var row = tile.attr('data-row'); //data-row: 'r1'
+  //   for(var j = 0; j < tile_array.length; j++) {
+  //     if (row == 'r0') {
+  //      console.log("done moving!");
+  //     } else {
+  //       var row_num = +(row.slice(1, 2)); //row-num: 1
+  //       var next_row = 'r' + (row_num - 1); //next_row: r0
+  //
+  //       if(tile_array[j].attr('data-col') == column) {
+  //         console.log(tile_array[j].attr('data-row'), next_row);
+  //         if (tile_array[j].attr('data-row') == next_row) {
+  //           console.log("I am not mutating");
+  //         } else {
+  //           tile.attr("data-row", next_row);
+  //         }
+  //       } else {
+  //         console.log("I am not in this column");
+  //       }
+  //     }
+  //   }
+  // }
+  //
+  //
 
     //tile.attr("data-row","r0") if no tile exists with data-col 0, rows 2, 1, 0
 
